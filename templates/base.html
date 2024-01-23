@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static '/css/style_index.css' %}">
+    {% block page_style %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -23,6 +24,9 @@
 
 <main>
     {% block content %}{% endblock %}
+    <br>
+    <br>
+    <br>
 </main>
 
 <footer>
