@@ -14,11 +14,11 @@
     <img class="logo" src="{% static 'images/logo-no-background.svg' %}" alt="Logo">
     <h1 class="title">Инженер-программист</h1>
     <div class="navbar">
-        <a href="#">Главная</a>
-        <a href="#">Востребованность</a>
-        <a href="#">География</a>
-        <a href="#">Навыки</a>
-        <a href="#">Последние вакансии</a>
+        <a href="{% url 'main' %}">Главная</a>
+        <a href="{% url 'demand' %}">Востребованность</a>
+        <a href="{% url 'geography' %}">География</a>
+        <a href="{% url 'skills' %}">Навыки</a>
+        <a href="{% url 'latest' %}">Последние вакансии</a>
     </div>
 </header>
 
