@@ -1,22 +1,47 @@
 from django.db import models
 
 
-class Skill(models.Model):
-    name = models.CharField(max_length=50)
+class Category(models.Model):
+    name = models.CharField(max_length=128, null=False)
+
+    def __str__(self):
+        return self.name
+
+
+class Theme(models.Model):
+    name = models.CharField(max_length=128, null=False)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class TableData(models.Model):
+    title = models.CharField(max_length=128)
+    column_names = models.CharField(max_length=128)
+    row_names = models.CharField(max_length=128)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
+    pass
+
+
+class Chart(models.Model):
+    title = models.CharField(max_length=128)
+    image_path = models.CharField(max_length=256)
+    alt_text = models.CharField(max_length=256, null=True, blank=True)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 
 class Vacancy(models.Model):
-    title = models.CharField(max_length=100)
+    name = models.CharField(max_length=128)
     description = models.TextField(null=True, blank=True)
-    skills = models.ManyToManyField(Skill, through='VacancySkill')
-    min_salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    max_salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    currency_code = models.CharField(max_length=3, null=True, blank=True)
-    employer = models.CharField(max_length=100, null=True, blank=True)
-    region = models.CharField(max_length=50, null=True, blank=True)
-    publication_date = models.DateField()
+    skills = models.CharField(max_length=512, null=True, blank=True)
+    company = models.CharField(max_length=128, null=True, blank=True)
+    salary = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
+    area = models.CharField(max_length=128)
+    publication_date = models.DateField(null=True, blank=True)
 
-
-class VacancySkill(models.Model):
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
-    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.name}, {self.salary}, {self.area}"

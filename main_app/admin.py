@@ -1,10 +1,9 @@
 from django.contrib import admin
 
-from main_app.models import Currency, Region, Skill, Employer, Vacancy, VacancySkill
+from main_app.models import Theme, Chart, Category, TableData, Vacancy
 
-admin.site.register(Currency)
-admin.site.register(Region)
-admin.site.register(Skill)
-admin.site.register(Employer)
+admin.site.register(Theme)
 admin.site.register(Vacancy)
-admin.site.register(VacancySkill)
+admin.site.register(Chart)
+admin.site.register(Category)
+admin.site.register(TableData)
