@@ -1,16 +1,19 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css/style_index.css">
-    <title>Инженер-программист</title>
+    <link rel="stylesheet" href="{% static '/css/style_index.css' %}">
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 <header class="title_div">
-    <img class="logo" src="../static/images/logo-no-background.svg" alt="Logo">
+    <img class="logo" src="{% static 'images/logo-no-background.svg' %}" alt="Logo">
     <h1 class="title">Инженер-программист</h1>
     <div class="navbar">
+        <a href="#">Главная</a>
         <a href="#">Востребованность</a>
         <a href="#">География</a>
         <a href="#">Навыки</a>
@@ -19,7 +22,7 @@
 </header>
 
 <main>
-
+    {% block content %}{% endblock %}
 </main>
 
 <footer>
