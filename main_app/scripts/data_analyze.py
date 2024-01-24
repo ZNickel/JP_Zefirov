@@ -63,7 +63,6 @@ def skill_top(filtration: bool):
 
 
 # Частота вакансий для города
-# ==============================
 def ratio_by_city(filtration: bool):
     df = pd.read_csv(path, usecols=['name', 'area_name'])
     if filtration:
