@@ -1,0 +1,33 @@
+.chart-img {
+    width: 33%;
+    height: auto;
+}
+
+.title-div {
+    width: 100%;
+    text-align: center;
+}
+
+.table-div {
+    width: 33%;
+    height: auto;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+}
+
+.theme-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+
+table, tr, td{
+    border: 1px solid black;
+}
+td{
+    padding-left: 20px;
+    padding-right: 20px;
+}
