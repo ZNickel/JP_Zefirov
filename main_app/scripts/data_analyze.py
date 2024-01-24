@@ -9,8 +9,6 @@ key_words_2 = 'soft|program|develop|разработчик|по|програм'
 path = '../../vacancies.csv'
 
 
-# Безопасное извлечение года
-# ==============================
 def safe_convert_to_year(value):
     try:
         return pd.to_datetime(value).year
@@ -18,7 +16,6 @@ def safe_convert_to_year(value):
         return None
 
 
-# Безопасный поиск средней ЗП
 def calculate_average_salary(row):
     try:
         salary_from = float(row['salary_from'])
@@ -41,7 +38,6 @@ def calculate_average_salary(row):
 
 
 # Кол-во по годам
-# ==============================
 def count_by_year(filtration: bool) -> dict:
     df = pd.read_csv(path, usecols=['name', 'published_at'])
     if filtration:
@@ -52,23 +48,15 @@ def count_by_year(filtration: bool) -> dict:
 # Топ-20 навыков по годам
 def skill_top(filtration: bool):
     df = pd.read_csv(path, usecols=['name', 'key_skills', 'published_at'])
-    print("read")
     df = df[df['key_skills'].notna()]
-    print("clr")
     if filtration:
         df = df[df['name'].str.contains(key_words_1, case=False) & df['name'].str.contains(key_words_2, case=False)]
-    print("filter")
 
     skills_df = df['key_skills'].str.split('\n', expand=True)
-    print("split")
     skills_df['year'] = df['published_at'].apply(safe_convert_to_year)
-    print("findYear")
     melted_df = pd.melt(skills_df, id_vars=['year'], value_name='skill').dropna()
-    print("melt")
     top_skills_by_year = melted_df.groupby(['year', 'skill']).size().reset_index(name='count')
-    print("tsby")
     top = top_skills_by_year.sort_values(['year', 'count'], ascending=[True, False]).groupby('year').head(20)
-    print("top!")
 
     for year, group in top.groupby('year'):
         print(year, dict(zip(group['skill'], group['count'])))

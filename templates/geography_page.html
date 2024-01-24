@@ -10,6 +10,23 @@
 {% endblock %}
 
 {% block content %}
+
+    {% for d in data %}
+        <div class="title-div"><h1>{{ d.0.name }}</h1></div>
+
+        <div class="theme-content">
+            {% with chart_file=d.0.chartfile_set.first %}
+                {% if chart_file %}
+                    <img class="chart-img" src="{{ chart_file.image.url }}" alt="{{ theme.name }} Chart">
+                {% else %}
+                    <p>No chart ((</p>
+                {% endif %}
+            {% endwith %}
+            <div class="table-div">
+                {{ d.1 |safe }}
+            </div>
+        </div>
+    {% endfor %}
     {% for d in data %}
         <div class="title-div"><h1>{{ d.0.name }}</h1></div>
 

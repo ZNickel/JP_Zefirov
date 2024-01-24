@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import render
 
-from main_app.models import Vacancy, Theme, TableFile
+from main_app.models import Vacancy, Theme, TableFile, ChartFile
 from main_app.scripts.hhru_api_handler import load_latest_vacancies
 
 
@@ -23,8 +23,34 @@ def geography(request):
 
 
 def skills(request):
-    themes = Theme.objects.filter(category__name='skills')
-    return render(request, 'skills_page.html')
+    themes = Theme.objects.filter(category__name='Навыки')
+
+    charts = []
+
+    for theme in themes:
+        for chart in ChartFile.objects.filter(theme__name=theme.name):
+            charts.append(chart)
+
+    tables = []
+    for theme in themes:
+        for raw_t in list(TableFile.objects.filter(theme=theme)):
+            json_data = json.load(raw_t.file)
+            col0 = json_data["columns"][0]
+            col1 = json_data["columns"][1]
+            rows = []
+            for i in range(len(col0['values'])):
+                rows.append(f"<tr><td>{col0['values'][i]}</td><td>{round(col1['values'][i], 2)}</td></tr>")
+            table = f"""
+            <table>
+                <thead>
+                <tr><th>{col0['name']}</th><th>{col1['name']}</th></tr>
+                </thead>
+                <tbody>{'\n'.join(rows)}</tbody>
+            </table>
+            """
+            tables.append(table)
+
+    return render(request, 'skills_page.html', context={"tables": tables, "charts": charts})
 
 
 def latest(request):
@@ -53,3 +79,7 @@ def build_tables(themes: list) -> list:
         """
         data.append([theme, table])
     return data
+
+
+def build_skill_table() -> list:
+    pass

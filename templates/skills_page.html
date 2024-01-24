@@ -6,9 +6,25 @@
 {% endblock %}
 
 {% block page_style %}
-    <link rel="stylesheet" href="{% static '/css/style_skills_page.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style_demand_page.css' %}">
 {% endblock %}
 
 {% block content %}
-    <p>Навыки</p>
+    {% for table in tables %}
+        <div class="table-div">
+            {{ table |safe }}
+        </div>
+        <br>
+        <br>
+        <br>
+    {% endfor %}
+
+    {% for chart in charts %}
+        <div class="theme-content">
+            <img class="chart-img" src="{{ chart.image.url }}" alt="Chart">
+        </div>
+        <br>
+        <br>
+        <br>
+    {% endfor %}
 {% endblock %}
