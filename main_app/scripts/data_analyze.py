@@ -6,7 +6,7 @@ from pandas import DataFrame
 
 key_words_1 = 'engineer|инженер'
 key_words_2 = 'soft|program|develop|разработчик|по|програм'
-path = '../../vacancies.csv'
+path = '../../v2.csv'
 
 
 # path = '../../v2.csv'
@@ -64,12 +64,21 @@ def skill_top(filtration: bool):
     melted_df = pd.melt(skills_df, id_vars=['year'], value_name='skill').dropna()
     top_skills_by_year = melted_df.groupby(['year', 'skill']).size().reset_index(name='count')
     top = top_skills_by_year.sort_values(['year', 'count'], ascending=[True, False]).groupby('year').head(20)
+
+    print(top)
+    res_dicts = []
+
+    years = top['year'].unique().tolist()
+    for value in years:
+        print(type(value))
+
     result_dict = {}
+    # for r in top:
+    #     print(r)
+    # print(group)
+    # result_dict[year] = list(group['skill'])
 
-    for year, group in top.groupby('year'):
-        result_dict[year] = list(group['skill'])
-
-    print(result_dict)
+    # print(result_dict)
 
 
 # Частота вакансий для города

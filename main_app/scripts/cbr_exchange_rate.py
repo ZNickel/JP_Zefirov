@@ -12,11 +12,11 @@ user_agents = [
 ]
 
 
-def get_response(year: int, month_number: int) -> str:
-    api_request = f"http://www.cbr.ru/scripts/XML_daily.asp?date_req=01/{month_number}/{year}"
-    response = requests.get(api_request, headers={"User-Agent": random.choice(user_agents)})
-    print(response.status_code, response.headers, response.history)
-    return response.text if response.status_code != 200 else response.status_code
+def get_response(yyyy: int, mm: int) -> str:
+    d__format = "{:02d}/{:02d}/{:04d}".format(1, mm, yyyy)
+    url = f"http://www.cbr.ru/scripts/XML_daily.asp?date_req={d__format}"
+    response = requests.get(url, headers={"User-Agent": random.choice(user_agents)})
+    return response.text if response.status_code == 200 else response.status_code
 
 
 def get_exchange_rate(currency_code: str, xml: str) -> float:
@@ -27,7 +27,7 @@ def get_exchange_rate(currency_code: str, xml: str) -> float:
         if char_code == currency_code:
             target_valute = valute
             break
-    return float(target_valute.find("Value").text)
+    return float(target_valute.find("Value").text.replace(",", "."))
 
 
 def get_rate_from_api(year: int, month_number: int, currency_code: str) -> float:
@@ -35,4 +35,4 @@ def get_rate_from_api(year: int, month_number: int, currency_code: str) -> float
     return get_exchange_rate(currency_code, xml)
 
 
-print(get_rate_from_api(3, 'AUD'))
+print(get_rate_from_api(2002, 3, 'AUD'))
