@@ -7,6 +7,8 @@ from pandas import DataFrame
 key_words_1 = 'engineer|инженер'
 key_words_2 = 'soft|program|develop|разработчик|по|програм'
 path = '../../vacancies.csv'
+
+
 # path = '../../v2.csv'
 
 
