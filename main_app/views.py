@@ -12,8 +12,29 @@ def main(request):
 
 def demand(request):
     themes = Theme.objects.filter(category__name='Востребованность')
-    data = []
+    data = build_tables(themes)
+    return render(request, 'demand_page.html', context={"data": data})
 
+
+def geography(request):
+    themes = Theme.objects.filter(category__name='География')
+    data = build_tables(themes)
+    return render(request, 'geography_page.html', context={"data": data})
+
+
+def skills(request):
+    themes = Theme.objects.filter(category__name='skills')
+    return render(request, 'skills_page.html')
+
+
+def latest(request):
+    load_latest_vacancies()
+    vac_list = Vacancy.objects.all().order_by('-id')[:10]
+    return render(request, 'latest_page.html', context={"vac_list": vac_list})
+
+
+def build_tables(themes: list) -> list:
+    data = []
     for theme in themes:
         tf = list(TableFile.objects.filter(theme=theme))[0]
         json_data = json.load(tf.file)
@@ -31,20 +52,4 @@ def demand(request):
         </table>
         """
         data.append([theme, table])
-    return render(request, 'demand_page.html', context={"data": data})
-
-
-def geography(request):
-    themes = Theme.objects.filter(category__name='geography')
-    return render(request, 'geography_page.html')
-
-
-def skills(request):
-    themes = Theme.objects.filter(category__name='skills')
-    return render(request, 'skills_page.html')
-
-
-def latest(request):
-    load_latest_vacancies()
-    vac_list = Vacancy.objects.all().order_by('-id')[:10]
-    return render(request, 'latest_page.html', context={"vac_list": vac_list})
+    return data

@@ -6,9 +6,24 @@
 {% endblock %}
 
 {% block page_style %}
-    <link rel="stylesheet" href="{% static '/css/style_geography_page.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style_demand_page.css' %}">
 {% endblock %}
 
 {% block content %}
-    <p>География</p>
+    {% for d in data %}
+        <div class="title-div"><h1>{{ d.0.name }}</h1></div>
+
+        <div class="theme-content">
+            {% with chart_file=d.0.chartfile_set.first %}
+                {% if chart_file %}
+                    <img class="chart-img" src="{{ chart_file.image.url }}" alt="{{ theme.name }} Chart">
+                {% else %}
+                    <p>No chart ((</p>
+                {% endif %}
+            {% endwith %}
+            <div class="table-div">
+                {{ d.1 |safe }}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

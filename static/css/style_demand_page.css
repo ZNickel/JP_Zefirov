@@ -1,6 +1,7 @@
 .chart-img {
     width: 33%;
     height: auto;
+    margin-left: 200px;
 }
 
 .title-div {
@@ -24,10 +25,11 @@
     margin: auto;
 }
 
-table, tr, td{
+table, tr, td {
     border: 1px solid black;
 }
-td{
+
+td {
     padding-left: 20px;
     padding-right: 20px;
 }
