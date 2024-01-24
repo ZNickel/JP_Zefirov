@@ -37,10 +37,10 @@ class Chart(models.Model):
 class Vacancy(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(null=True, blank=True)
-    skills = models.CharField(max_length=512, null=True, blank=True)
+    key_skills = models.CharField(max_length=512, null=True, blank=True)
     company = models.CharField(max_length=128, null=True, blank=True)
     salary = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
-    area = models.CharField(max_length=128)
+    area_name = models.CharField(max_length=128)
     publication_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
