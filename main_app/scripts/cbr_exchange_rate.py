@@ -27,6 +27,8 @@ def get_exchange_rate(currency_code: str, xml: str) -> float:
         if char_code == currency_code:
             target_valute = valute
             break
+    if target_valute is None:
+        return 1
     return float(target_valute.find("Value").text.replace(",", "."))
 
 

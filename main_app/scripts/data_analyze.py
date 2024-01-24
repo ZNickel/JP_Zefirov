@@ -6,10 +6,7 @@ from pandas import DataFrame
 
 key_words_1 = 'engineer|инженер'
 key_words_2 = 'soft|program|develop|разработчик|по|програм'
-path = '../../v2.csv'
-
-
-# path = '../../v2.csv'
+path = '../../vacancies.csv'
 
 
 # Безопасное извлечение года
@@ -55,30 +52,26 @@ def count_by_year(filtration: bool) -> dict:
 # Топ-20 навыков по годам
 def skill_top(filtration: bool):
     df = pd.read_csv(path, usecols=['name', 'key_skills', 'published_at'])
+    print("read")
     df = df[df['key_skills'].notna()]
+    print("clr")
     if filtration:
         df = df[df['name'].str.contains(key_words_1, case=False) & df['name'].str.contains(key_words_2, case=False)]
+    print("filter")
 
     skills_df = df['key_skills'].str.split('\n', expand=True)
+    print("split")
     skills_df['year'] = df['published_at'].apply(safe_convert_to_year)
+    print("findYear")
     melted_df = pd.melt(skills_df, id_vars=['year'], value_name='skill').dropna()
+    print("melt")
     top_skills_by_year = melted_df.groupby(['year', 'skill']).size().reset_index(name='count')
+    print("tsby")
     top = top_skills_by_year.sort_values(['year', 'count'], ascending=[True, False]).groupby('year').head(20)
+    print("top!")
 
-    print(top)
-    res_dicts = []
-
-    years = top['year'].unique().tolist()
-    for value in years:
-        print(type(value))
-
-    result_dict = {}
-    # for r in top:
-    #     print(r)
-    # print(group)
-    # result_dict[year] = list(group['skill'])
-
-    # print(result_dict)
+    for year, group in top.groupby('year'):
+        print(year, dict(zip(group['skill'], group['count'])))
 
 
 # Частота вакансий для города
@@ -103,4 +96,4 @@ def avg_salary_year(filtration: bool) -> dict:
     return df.dropna(subset=['salary']).groupby('year')['salary'].mean().to_dict()
 
 
-print(skill_top(True))
+print(skill_top(False))
