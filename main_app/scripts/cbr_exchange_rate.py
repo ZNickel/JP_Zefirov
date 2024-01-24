@@ -35,6 +35,3 @@ def get_exchange_rate(currency_code: str, xml: str) -> float:
 def get_rate_from_api(year: int, month_number: int, currency_code: str) -> float:
     xml = get_response(year, month_number)
     return get_exchange_rate(currency_code, xml)
-
-
-print(get_rate_from_api(2002, 3, 'AUD'))
