@@ -10,5 +10,31 @@
 {% endblock %}
 
 {% block content %}
+    <table>
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Описание?</th>
+            <th>Требуемые навыки</th>
+            <th>Компания</th>
+            <th>Оклад</th>
+            <th>Название региона</th>
+            <th>Дата публикации</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in vac_list %}
+            <tr>
+                <td>{{ obj.name }}</td>
+                <td>{{ obj.description }}</td>
+                <td>{{ obj.key_skills }}</td>
+                <td>{{ obj.company }}</td>
+                <td>{{ obj.salary }}</td>
+                <td>{{ obj.area_name }}</td>
+                <td>{{ obj.publication_date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     <p>Последние вакансии</p>
 {% endblock %}

@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
+from main_app.models import Vacancy
+from main_app.scripts.hhru_api_handler import load_latest_vacancies
+
 
 def main(request):
     return render(request, 'main_page.html')
@@ -18,4 +21,6 @@ def skills(request):
 
 
 def latest(request):
-    return render(request, 'latest_page.html')
+    load_latest_vacancies()
+    vac_list = Vacancy.objects.all().order_by('-id')[:10]
+    return render(request, 'latest_page.html', context={"vac_list": vac_list})
