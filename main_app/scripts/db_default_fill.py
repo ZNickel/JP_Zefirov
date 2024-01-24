@@ -3,9 +3,9 @@ from main_app.scripts.data_analyze import skill_top, count_by_year, avg_salary_y
 
 category_theme_names = {
     'Востребованность': [
-        'Динамика уровня зарплат по годам',
+        'Динамика уровня зарплат по годам',  #
         'Динамика количества вакансий по годам',  #
-        'Динамика уровня зарплат по годам для выбранной профессии',
+        'Динамика уровня зарплат по годам для выбранной профессии',  #
         'Динамика количества вакансий по годам для выбранной профессии',  #
     ],
     'География': [
@@ -26,3 +26,6 @@ def fill():
         category = Category.objects.create(name=key)
         for v in values:
             Theme.objects.create(name=v, category=category)
+
+
+fill()

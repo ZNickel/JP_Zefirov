@@ -38,7 +38,7 @@ class TableRow(models.Model):
 
 class Chart(models.Model):
     title = models.CharField(max_length=128)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='media/')
     alt_text = models.CharField(max_length=256, null=True, blank=True)
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
 
